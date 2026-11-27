@@ -53,8 +53,7 @@ Schema identifiers refer to `DatabaseMigrator` migration names.
   value `'nan'` in the REAL `amount` column. Writes now go through GRDB records.
 
 ### Known issues
-- Existing `'nan'` rows were not cleaned up. `SUM(amount)` treats them as 0;
-  record decoding turns them into `Double.nan`.
+- Existing 'nan' rows were not cleaned up. SUM(amount) treats them as 0, and fetched records also read them as 0.0, so in the app they look like ordinary zero-amount transactions.
 
 ## [1.0.0] - 2023-01-02
 
