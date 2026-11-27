@@ -125,29 +125,39 @@ struct WalletSnapshot: Encodable {
     let id: Int64
     let name: String
     let transactionCount: Int
-    let validTransactionCount: Int
-    let balanceCents: Int64
+    let cleanTransactionCount: Int
+    let cleanRowsBalanceCents: Int64
 }
 
-struct InvalidRow: Encodable {
+struct FlaggedRow: Encodable {
     let id: Int64
     let walletId: Int64
     let reason: String
-    let typedAmount: String
+    let storedValue: String
 }
 
 struct Snapshot: Encodable {
     let schemaVersion: String
     let seed: UInt64
     let totalTransactionCount: Int
-    let validTransactionCount: Int
-    let invalidTransactionIds: [Int64]
-    let invalidTransactions: [InvalidRow]
+    let cleanTransactionCount: Int
+    let flaggedTransactionIds: [Int64]
+    let flaggedTransactions: [FlaggedRow]
+    let scopeNote: String
     let wallets: [WalletSnapshot]
 }
 
-let validRows = rows.filter { $0.kind == .valid }
-let invalidRows = rows.filter { $0.kind != .valid }
+let cleanRows = rows.filter { $0.kind == .valid }
+let flaggedRows = rows.filter { $0.kind != .valid }
+
+/// What the v1 database actually holds for a flagged row.
+func storedValue(_ row: SeedRow) -> String {
+    switch row.kind {
+    case .nanAmount: return "nan"
+    case .threeDecimals: return row.typedAmount
+    case .valid: fail("row \(row.id): clean row is not flagged")
+    }
+}
 
 let walletSnapshots = Fixture.wallets.enumerated().map { index, wallet -> WalletSnapshot in
     let all = rows.filter { $0.walletIndex == index }
@@ -160,8 +170,8 @@ let walletSnapshots = Fixture.wallets.enumerated().map { index, wallet -> Wallet
         id: wallet.id,
         name: wallet.name,
         transactionCount: all.count,
-        validTransactionCount: valid.count,
-        balanceCents: balance
+        cleanTransactionCount: valid.count,
+        cleanRowsBalanceCents: balance
     )
 }
 
@@ -169,11 +179,12 @@ let snapshot = Snapshot(
     schemaVersion: "v1-initial",
     seed: Fixture.seed,
     totalTransactionCount: rows.count,
-    validTransactionCount: validRows.count,
-    invalidTransactionIds: invalidRows.map(\.id).sorted(),
-    invalidTransactions: invalidRows
+    cleanTransactionCount: cleanRows.count,
+    flaggedTransactionIds: flaggedRows.map(\.id).sorted(),
+    flaggedTransactions: flaggedRows
         .sorted { $0.id < $1.id }
-        .map { InvalidRow(id: $0.id, walletId: Fixture.wallets[$0.walletIndex].id, reason: $0.kind.rawValue, typedAmount: $0.typedAmount) },
+        .map { FlaggedRow(id: $0.id, walletId: Fixture.wallets[$0.walletIndex].id, reason: $0.kind.rawValue, storedValue: storedValue($0)) },
+    scopeNote: "Balances cover only rows typed with up to 2 decimals. Flagged rows are listed as stored and are not part of any total.",
     wallets: walletSnapshots
 )
 
@@ -190,12 +201,12 @@ guard dbCount == Fixture.transactionCount else { fail("DB has \(dbCount) transac
 
 print("Wrote \(dbURL.path)")
 print("Wrote \(snapshotURL.path)")
-print("transactions: \(rows.count)  valid: \(validRows.count)  invalid: \(invalidRows.count)")
+print("transactions: \(rows.count)  clean: \(cleanRows.count)  flagged: \(flaggedRows.count)")
 
-// Shows how far the v1 REAL column drifts from the truth. Informational only.
+// Clean-row balance next to what the v1 balance(for:) returns. Informational only.
 let repository = TransactionRepository(database: database)
 for wallet in walletSnapshots {
     let sum = try repository.balance(for: wallet.id)
-    let golden = Decimal(wallet.balanceCents) / 100
-    print("wallet \(wallet.id) \(wallet.name): golden \(golden)  SUM(amount) \(String(format: "%.10f", sum)) (includes invalid rows)")
+    let clean = Decimal(wallet.cleanRowsBalanceCents) / 100
+    print("wallet \(wallet.id) \(wallet.name): clean rows \(clean)  v1 SUM(amount) \(String(format: "%.10f", sum))")
 }

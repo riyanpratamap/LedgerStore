@@ -7,8 +7,9 @@ Schema identifiers refer to `DatabaseMigrator` migration names.
 
 ### Tooling
 - `SeedTool` executable: builds `ledger_v1.sqlite` (3 wallets, 5,000 transactions,
-  including the legacy bad rows listed under Known issues) and `golden_snapshot.json`
-  with exact per-wallet balances in integer cents. Fixed seed; output is byte-identical
+  including the legacy rows listed under Known issues) and `golden_snapshot.json`
+  with per-wallet balances of the clean rows in integer cents, and the flagged rows
+  listed with the value the v1 database stores. Fixed seed; output is byte-identical
   between runs.
 
 ## [1.2.1] - 2024-03-18
@@ -63,3 +64,5 @@ Schema identifiers refer to `DatabaseMigrator` migration names.
 - `WalletRepository`, `TransactionRepository` with `balance(for:)` as `SUM(amount)`.
 - `category` is free text. No category table on purpose: users wanted their own labels.
 - Amounts stored as `Double` (SQLite REAL).
+- Balances are displayed by formatting the `Double` from `balance(for:)` with
+  `NumberFormatter` (`.currency` style, default rounding mode `.halfEven`).

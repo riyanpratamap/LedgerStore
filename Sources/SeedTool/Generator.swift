@@ -5,9 +5,9 @@ struct SeedRow {
     enum Kind: String {
         case valid
         /// 1.0.x parsed "12,50" with the device locale and wrote NaN.
-        case nanAmount = "nan_amount"
+        case nanAmount = "stored_as_text_nan"
         /// 1.1.0 amount field had no decimal limit.
-        case threeDecimals = "three_decimals"
+        case threeDecimals = "typed_three_decimals"
     }
 
     let id: Int64

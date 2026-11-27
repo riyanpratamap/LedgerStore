@@ -1,5 +1,6 @@
 {
-  "invalidTransactionIds" : [
+  "cleanTransactionCount" : 4988,
+  "flaggedTransactionIds" : [
     22,
     516,
     531,
@@ -13,105 +14,105 @@
     3812,
     3958
   ],
-  "invalidTransactions" : [
+  "flaggedTransactions" : [
     {
       "id" : 22,
-      "reason" : "nan_amount",
-      "typedAmount" : "7,5",
+      "reason" : "stored_as_text_nan",
+      "storedValue" : "nan",
       "walletId" : 2
     },
     {
       "id" : 516,
-      "reason" : "three_decimals",
-      "typedAmount" : "1250.005",
+      "reason" : "typed_three_decimals",
+      "storedValue" : "1250.005",
       "walletId" : 1
     },
     {
       "id" : 531,
-      "reason" : "nan_amount",
-      "typedAmount" : "0,99",
+      "reason" : "stored_as_text_nan",
+      "storedValue" : "nan",
       "walletId" : 2
     },
     {
       "id" : 812,
-      "reason" : "nan_amount",
-      "typedAmount" : "€3,20",
+      "reason" : "stored_as_text_nan",
+      "storedValue" : "nan",
       "walletId" : 1
     },
     {
       "id" : 825,
-      "reason" : "nan_amount",
-      "typedAmount" : "12,50",
+      "reason" : "stored_as_text_nan",
+      "storedValue" : "nan",
       "walletId" : 2
     },
     {
       "id" : 869,
-      "reason" : "three_decimals",
-      "typedAmount" : "12.345",
+      "reason" : "typed_three_decimals",
+      "storedValue" : "12.345",
       "walletId" : 1
     },
     {
       "id" : 902,
-      "reason" : "nan_amount",
-      "typedAmount" : "1.234,56",
+      "reason" : "stored_as_text_nan",
+      "storedValue" : "nan",
       "walletId" : 1
     },
     {
       "id" : 959,
-      "reason" : "nan_amount",
-      "typedAmount" : "15,-",
+      "reason" : "stored_as_text_nan",
+      "storedValue" : "nan",
       "walletId" : 1
     },
     {
       "id" : 976,
-      "reason" : "three_decimals",
-      "typedAmount" : "0.125",
+      "reason" : "typed_three_decimals",
+      "storedValue" : "0.125",
       "walletId" : 2
     },
     {
       "id" : 2149,
-      "reason" : "three_decimals",
-      "typedAmount" : "3.333",
+      "reason" : "typed_three_decimals",
+      "storedValue" : "3.333",
       "walletId" : 1
     },
     {
       "id" : 3812,
-      "reason" : "three_decimals",
-      "typedAmount" : "-4.875",
+      "reason" : "typed_three_decimals",
+      "storedValue" : "-4.875",
       "walletId" : 1
     },
     {
       "id" : 3958,
-      "reason" : "three_decimals",
-      "typedAmount" : "99.999",
+      "reason" : "typed_three_decimals",
+      "storedValue" : "99.999",
       "walletId" : 1
     }
   ],
   "schemaVersion" : "v1-initial",
+  "scopeNote" : "Balances cover only rows typed with up to 2 decimals. Flagged rows are listed as stored and are not part of any total.",
   "seed" : 20231201,
   "totalTransactionCount" : 5000,
-  "validTransactionCount" : 4988,
   "wallets" : [
     {
-      "balanceCents" : 32915842,
+      "cleanRowsBalanceCents" : 32915842,
+      "cleanTransactionCount" : 2685,
       "id" : 1,
       "name" : "Cash",
-      "transactionCount" : 2693,
-      "validTransactionCount" : 2685
+      "transactionCount" : 2693
     },
     {
-      "balanceCents" : 4117858264,
+      "cleanRowsBalanceCents" : 4117858264,
+      "cleanTransactionCount" : 1766,
       "id" : 2,
       "name" : "Main Account",
-      "transactionCount" : 1770,
-      "validTransactionCount" : 1766
+      "transactionCount" : 1770
     },
     {
-      "balanceCents" : 2543484217,
+      "cleanRowsBalanceCents" : 2543484217,
+      "cleanTransactionCount" : 537,
       "id" : 3,
       "name" : "Savings 🏠",
-      "transactionCount" : 537,
-      "validTransactionCount" : 537
+      "transactionCount" : 537
     }
   ]
 }
