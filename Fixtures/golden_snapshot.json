@@ -1,0 +1,117 @@
+{
+  "invalidTransactionIds" : [
+    22,
+    516,
+    531,
+    812,
+    825,
+    869,
+    902,
+    959,
+    976,
+    2149,
+    3812,
+    3958
+  ],
+  "invalidTransactions" : [
+    {
+      "id" : 22,
+      "reason" : "nan_amount",
+      "typedAmount" : "7,5",
+      "walletId" : 2
+    },
+    {
+      "id" : 516,
+      "reason" : "three_decimals",
+      "typedAmount" : "1250.005",
+      "walletId" : 1
+    },
+    {
+      "id" : 531,
+      "reason" : "nan_amount",
+      "typedAmount" : "0,99",
+      "walletId" : 2
+    },
+    {
+      "id" : 812,
+      "reason" : "nan_amount",
+      "typedAmount" : "€3,20",
+      "walletId" : 1
+    },
+    {
+      "id" : 825,
+      "reason" : "nan_amount",
+      "typedAmount" : "12,50",
+      "walletId" : 2
+    },
+    {
+      "id" : 869,
+      "reason" : "three_decimals",
+      "typedAmount" : "12.345",
+      "walletId" : 1
+    },
+    {
+      "id" : 902,
+      "reason" : "nan_amount",
+      "typedAmount" : "1.234,56",
+      "walletId" : 1
+    },
+    {
+      "id" : 959,
+      "reason" : "nan_amount",
+      "typedAmount" : "15,-",
+      "walletId" : 1
+    },
+    {
+      "id" : 976,
+      "reason" : "three_decimals",
+      "typedAmount" : "0.125",
+      "walletId" : 2
+    },
+    {
+      "id" : 2149,
+      "reason" : "three_decimals",
+      "typedAmount" : "3.333",
+      "walletId" : 1
+    },
+    {
+      "id" : 3812,
+      "reason" : "three_decimals",
+      "typedAmount" : "-4.875",
+      "walletId" : 1
+    },
+    {
+      "id" : 3958,
+      "reason" : "three_decimals",
+      "typedAmount" : "99.999",
+      "walletId" : 1
+    }
+  ],
+  "schemaVersion" : "v1-initial",
+  "seed" : 20231201,
+  "totalTransactionCount" : 5000,
+  "validTransactionCount" : 4988,
+  "wallets" : [
+    {
+      "balanceCents" : 32915842,
+      "id" : 1,
+      "name" : "Cash",
+      "transactionCount" : 2693,
+      "validTransactionCount" : 2685
+    },
+    {
+      "balanceCents" : 4117858264,
+      "id" : 2,
+      "name" : "Main Account",
+      "transactionCount" : 1770,
+      "validTransactionCount" : 1766
+    },
+    {
+      "balanceCents" : 2543484217,
+      "id" : 3,
+      "name" : "Savings 🏠",
+      "transactionCount" : 537,
+      "validTransactionCount" : 537
+    }
+  ]
+}
